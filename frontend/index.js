@@ -2,6 +2,7 @@
 // Custom extension to register volunteers at a particular project fro CoH
 //
 // V0.1	draft	23/3/25	Jerry Barnes
+// v1.0 first issue  18/5/25  Jerry Barnes - fixed only filtering on first project a volunteer has
 //
 //
 //
@@ -98,7 +99,7 @@ function Help() {
 
     // the filter will select only those records for which the volunteer has a link to the project 
 	const volunteerRecords = volunteerRecordset && volunteerProjectLinkField ? volunteerRecordset.filter(volunteer => {
-			return (volunteer.getCellValue(volunteerProjectLinkField.id) && volunteer.getCellValue(volunteerProjectLinkField.id)[0].id == projectRecId)
+			return (myFilter(volunteer.getCellValue(volunteerProjectLinkField.id), projectRecId))
 		}) : null;
 	
 	
@@ -199,6 +200,20 @@ function Help() {
 		);
 		
 }
+
+function myFilter(projects, projectid){
+
+    if (projects){
+        for (let p of projects){
+            if (p.id == projectid){
+                return true;
+            }
+        }
+
+    }
+    return false;
+}
+
 
 function chooseProject(setProjectRecId, projectRecordId, projectRecords, projectNameField, setChosenProject){
 	
